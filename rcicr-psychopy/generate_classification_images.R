@@ -17,8 +17,15 @@ rcdata$oriinv <- str_match(rcdata$selectedstim, "_([invori]+).")[,2]
 rcdata$response[rcdata$oriinv == 'ori'] <- 1
 rcdata$response[rcdata$oriinv == 'inv'] <- -1
 
+# Locate the .Rdata file generate_stimuli.R wrote. Its name carries the
+# timestamp it was generated at, so it can't be hardcoded here.
+rdata_file <- list.files("stimuli", pattern = "\\.Rdata$", full.names = TRUE)[1]
+if (is.na(rdata_file)) {
+  stop("No .Rdata file found in stimuli/ -- run generate_stimuli.R first.")
+}
+
 # Generate CI
-ci <- generateCI2IFC(rcdata$stim, rcdata$response, 'male', 'stimuli/preconf_seed_1_time_Apr_05_2016_12_35.Rdata', scaling='matched')
+ci <- generateCI2IFC(rcdata$stim, rcdata$response, 'male', rdata_file, scaling='matched', targetpath = 'cis')
 
 # Generate anti-CI
-ci <- generateCI2IFC(rcdata$stim, rcdata$response, 'male', 'stimuli/preconf_seed_1_time_Apr_05_2016_12_35.Rdata', scaling='matched', antiCI=T)
+ci <- generateCI2IFC(rcdata$stim, rcdata$response, 'male', rdata_file, scaling='matched', antiCI=T, targetpath = 'cis')
