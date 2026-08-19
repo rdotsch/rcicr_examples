@@ -6,7 +6,7 @@ install.packages("rcicr")
 library(rcicr)
 
 # Set base face
-base = list('male'='mnes.jpg')
+base = list('male'='MNES.jpg')
 
 # Generate and save stimuli
 generateStimuli2IFC(base_face_files = base, n_trials=20, stimulus_path = "./stimuli", label='preconf', nscales=5, noise_type='gabor', sigma=25)
