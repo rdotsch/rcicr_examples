@@ -6,8 +6,10 @@ library(stringr)
 # Load data
 rcdata <- read.csv('rcic.csv')
 
-# Extract stimulus number based on trial number
-rcdata$stim <- rcdata$trial + 1
+# Extract the stimulus number from the file name, e.g. preconf_male_1_00012_ori.png
+# is stimulus 12. Reading it from the name, not the trial counter, keeps the
+# two matched however the task ordered the trials.
+rcdata$stim <- as.numeric(str_match(rcdata$selectedstim, "_([0-9]+)_(ori|inv)\\.")[,2])
 
 # Extract ori/inv from selectedstim
 rcdata$oriinv <- str_match(rcdata$selectedstim, "_([invori]+).")[,2]
