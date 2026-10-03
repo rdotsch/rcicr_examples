@@ -24,9 +24,11 @@ Participants: 4
 
 ## Data set 3
 
-Filename: 2ifc_1400_trials_male.csv
+Filename: 4afc_1400_trials.csv
 Target mental representation: gender
 Method: 4 alternative forced choice
 Choices: Feminine / Somewhat feminine / Somewhat masculine / Masculine
+(responses 1 to 4; recode them, e.g. to -2, -1, 1, 2, before passing them to
+generateCI() as weights)
 Trials: 1400
 Participants: 4

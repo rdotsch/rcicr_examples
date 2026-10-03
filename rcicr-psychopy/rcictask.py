@@ -25,9 +25,14 @@ else:
 win = visual.Window(size=winsize)
 mouse = event.Mouse()
 
-# Load stimuli
-stim = [f for f in listdir (stimulidir) if '.jpg' in f]
-ntrials = len(stim) / 2
+# Load stimuli. rcicr writes PNGs (JPEGs before October 2016), one original
+# and one inverted image per trial: <label>_<base>_<seed>_<trial>_ori.png and
+# the same name ending _inv.png. Each original is paired with its own inverted
+# image by name, and trials run in order of the zero-padded trial number,
+# because listdir() returns files in no guaranteed order.
+images = [f for f in listdir(stimulidir) if f.lower().endswith(('.png', '.jpg'))]
+oristims = sorted(f for f in images if '_ori.' in f)
+ntrials = len(oristims)
 
 stimleft = visual.ImageStim(win, pos=(-0.5, 0), size = (0.9, 0.9))
 stimright = visual.ImageStim(win, pos=(0.5, 0), size= (0.9, 0.9))
@@ -47,8 +52,8 @@ dataf.close()
 
 for trial in range(ntrials) :
 
-    oristimf = stim[(trial * 2) + 1]
-    invstimf = stim[(trial * 2)]
+    oristimf = oristims[trial]
+    invstimf = oristimf.replace('_ori.', '_inv.')
 
     if randint(0,1) == 0 :
         stimleftf = oristimf
